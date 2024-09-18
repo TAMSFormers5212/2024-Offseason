@@ -23,8 +23,20 @@ RobotContainer::RobotContainer() {
   ConfigureBindings();
   m_drive.SetDefaultCommand(RunCommand(
         [this] {
+            if(m_driverController.GetRawAxis(0)>0.05){
+              m_drive.SetLeftSpeed(m_driverController.GetRawAxis(0));
+            }
+            if(m_driverController.GetRawAxis(1)>0.05){
+              m_drive.SetRightSpeed(m_driverController.GetRawAxis(1));
+            }
+            
             //Use driverController.GetRawAxis to get inputs and make the motors move based off of those inputs
             //Left joystick should control left motors, right joystick should control right motors
+
+
+            //Challenge 2: Make it so that when button A is pressed, the robot stops moving. 
+            //challenge 3: Print the speeds to shuffleboard
+
         }, {&m_drive}
 
     ));
