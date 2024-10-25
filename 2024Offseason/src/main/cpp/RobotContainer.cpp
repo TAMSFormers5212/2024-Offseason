@@ -18,37 +18,55 @@
 using namespace std;
 using namespace frc2;
 using namespace OIConstants;
-RobotContainer::RobotContainer() {
-  
+
+RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor)
+{
   ConfigureBindings();
   m_drive.SetDefaultCommand(RunCommand(
-        [this] {
-            if(m_driverController.GetRawAxis(0)>0.05){
-              m_drive.SetLeftSpeed(m_driverController.GetRawAxis(0));
-            }
-            if(m_driverController.GetRawAxis(1)>0.05){
-              m_drive.SetRightSpeed(m_driverController.GetRawAxis(1));
-            }
-            
-            //Use driverController.GetRawAxis to get inputs and make the motors move based off of those inputs
-            //Left joystick should control left motors, right joystick should control right motors
+    [this]
+    {
+      double leftSpeed = m_driverController.GetRawAxis(1);
+      double rightSpeed = m_driverController.GetRawAxis(5);
+      if (m_driverController.GetRawButtonPressed(Controller::A))
+      {
+        leftSpeed = 0;
+        rightSpeed = 0;
+      }
 
+      m_drive.SetLeftSpeed(leftSpeed);
+      m_drive.SetRightSpeed(rightSpeed);
 
-            //Challenge 2: Make it so that when button A is pressed, the robot stops moving. 
-            //challenge 3: Print the speeds to shuffleboard
+      // Use driverController.GetRawAxis to get inputs and make the motors move based off of those inputs
+      // Left joystick should control left motors, right joystick should control right motors
 
-        }, {&m_drive}
+      // Challenge 2: Make it so that when button A is pressed, the robot stops moving.
 
-    ));
+      // challenge 3: Print the speeds to shuffleboard
+      frc::SmartDashboard::PutNumber("Left Speed", m_drive.GetLeftSpeed());
+      frc::SmartDashboard::PutNumber("Right Speed", m_drive.GetRightSpeed());
+    },
+    { &m_drive }));
+
+  m_intake.SetDefaultCommand(RunCommand(
+    [this] {
+      if (m_operatorController.GetRawButton(Controller::B)) {
+        m_intake.SetSpeed(.5);
+      }
+      else {
+        m_intake.SetSpeed(.0);
+      }
+    }
+  ));
 }
 
-void RobotContainer::ConfigureBindings() {
+void RobotContainer::ConfigureBindings()
+{
 
-    JoystickButton leftYAxis(&m_driverController, Controller::leftYAxis);
-    JoystickButton rightYAxis(&m_driverController, Controller::rightYAxis);
-    
+  JoystickButton leftYAxis(&m_driverController, Controller::leftYAxis);
+  JoystickButton rightYAxis(&m_driverController, Controller::rightYAxis);
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand() {
+frc2::CommandPtr RobotContainer::GetAutonomousCommand()
+{
   return frc2::cmd::Print("No autonomous command configured");
 }

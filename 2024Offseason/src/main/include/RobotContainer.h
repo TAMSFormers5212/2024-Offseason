@@ -6,6 +6,7 @@
 #include "Constants.h"
 #include <frc2/command/CommandPtr.h>
 #include "TankDrive.h"
+#include "Intake.h"
 #include <frc/GenericHID.h>
 using namespace OIConstants;
 class RobotContainer {
@@ -17,5 +18,7 @@ class RobotContainer {
  private:
   void ConfigureBindings();
   TankDrive m_drive;
+  Intake m_intake;
   frc::GenericHID m_driverController{kDriverControllerPort};
+  frc::GenericHID m_operatorController{kOperatorControllerPort};
 };
