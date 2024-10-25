@@ -9,6 +9,7 @@
 #include <rev/SparkPIDController.h>
 #include <frc/motorcontrol/Spark.h>
 #include <frc/DigitalInput.h>
+#include "Constants.h"
 
 using namespace rev;
 using namespace frc;
@@ -16,16 +17,17 @@ using namespace frc;
 class Intake : public frc2::SubsystemBase {
 public:
     Intake(int motor);
-    void ResetMotor();
     void Periodic() override;
-    void SetSpeed(double speed);
-    double GetSpeed();
+
+    void resetMotor();
+    void setSpeed(double speed);
+    double getSpeed();
 
     bool isOn();
-    void setOn(bool on);
-    void toggleOn();
+    void toggle();
+    void toggleReverse();
 private:
-    bool on = false;
+    double speed = 0.0;
 
     CANSparkMax m_intakeMotor;
     DigitalInput m_beamBreak{ OIConstants::kBreakBeamChannel };

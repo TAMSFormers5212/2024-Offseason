@@ -9,35 +9,36 @@ using namespace rev;
 using namespace std;
 
 Intake::Intake(int motor) : m_intakeMotor(motor, CANSparkLowLevel::MotorType::kBrushless) {
-    ResetMotor();
+    resetMotor();
 }
 
-void Intake::ResetMotor() {
+void Intake::resetMotor() {
     m_intakeMotor.RestoreFactoryDefaults();
     m_intakeMotor.SetIdleMode(CANSparkBase::IdleMode::kCoast);
     m_intakeMotor.SetSmartCurrentLimit(20, 25);
 }
 
-void Intake::SetSpeed(double speed) {
-    m_intakeMotor.Set(speed);
+void Intake::setSpeed(double speed) {
+    this->speed = speed;
+    m_intakeMotor.Set(this->speed);
 }
 
-double Intake::GetSpeed() {
-    return m_intakeMotor.Get();
+double Intake::getSpeed() {
+    return speed;
 }
 
 bool Intake::isOn() {
-    return on;
+    return speed != 0.0;
 }
 
-void Intake::setOn(bool on) {
-    this->on = on;
+void Intake::toggle() {
+    setSpeed(speed != 0 ? 0 : 0.5);
 }
 
-void Intake::toggleOn() {
-    setOn(!on);
+void Intake::toggleReverse() {
+    setSpeed(speed != 0 ? 0 : -0.5);
 }
 
 void Intake::Periodic() {
-    frc::SmartDashboard::PutNumber("Intake Speed", GetSpeed());
+    frc::SmartDashboard::PutNumber("Intake Speed", getSpeed());
 }

@@ -50,10 +50,12 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor)
   m_intake.SetDefaultCommand(RunCommand(
     [this] {
       if (m_operatorController.GetRawButton(Controller::B)) {
-        m_intake.SetSpeed(.5);
+        m_intake.toggle();
       }
-      else {
-        m_intake.SetSpeed(.0);
+      else if (m_operatorController.GetRawButton(Controller::X)) {
+        m_intake.toggleReverse();
+      } else {
+        m_intake.setSpeed(0);
       }
     }
   ));
