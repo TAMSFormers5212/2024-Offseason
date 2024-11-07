@@ -8,6 +8,7 @@
 #include "TankDrive.h"
 #include "Intake.h"
 #include <frc/GenericHID.h>
+#include "Shooter.h"
 using namespace OIConstants;
 class RobotContainer {
  public:
@@ -19,6 +20,7 @@ class RobotContainer {
   void ConfigureBindings();
   TankDrive m_drive;
   Intake m_intake;
+  Shooter m_shooter;
   frc::GenericHID m_driverController{kDriverControllerPort};
   frc::GenericHID m_operatorController{kOperatorControllerPort};
 };

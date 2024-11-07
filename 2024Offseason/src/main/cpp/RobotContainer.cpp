@@ -19,14 +19,14 @@ using namespace std;
 using namespace frc2;
 using namespace OIConstants;
 
-RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor)
+RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shooter(OIConstants::kShooterMotor)
 {
   ConfigureBindings();
   m_drive.SetDefaultCommand(RunCommand(
     [this]
     {
-      double leftSpeed = m_driverController.GetRawAxis(1);
-      double rightSpeed = m_driverController.GetRawAxis(5);
+      double leftSpeed = m_driverController.GetRawAxis(Controller::leftYAxis);
+      double rightSpeed = m_driverController.GetRawAxis(Controller::rightYAxis);
       if (m_driverController.GetRawButtonPressed(Controller::A))
       {
         leftSpeed = 0;
@@ -59,6 +59,18 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor)
       }
     }
   ));
+
+   m_shooter.SetDefaultCommand(RunCommand(    
+        [this] {
+            
+            
+            if (/*TASK: Write in condition for when you want the shooter to be running. Hint 1: Should be tied to when the right trigger is past a relative small value. Hint 2: Triggers are considered "axises" so when looking through the genericHID Class on wpilib c++ documentation, look for the functions that return an axis value. */true){
+                m_shooter.setSpeed(/*TASK: Using similar value to the if statement, use the value returned by the trigger being pushed down to set the speed, replace placeholder of 1*/ 1 * 600);
+            }
+            frc::SmartDashboard::PutNumber("leftShooterSpeed",m_superstructure.m_shooter.getleftSpeed());
+        },
+        {&m_shooter}   
+    ));
 }
 
 void RobotContainer::ConfigureBindings()
