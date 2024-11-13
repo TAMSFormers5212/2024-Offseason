@@ -47,27 +47,33 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shoote
     },
     { &m_drive }));
 
-  m_intake.SetDefaultCommand(RunCommand(
-    [this] {
-      if (m_operatorController.GetRawButton(Controller::B)) {
-        m_intake.toggle();
-      }
-      else if (m_operatorController.GetRawButton(Controller::X)) {
-        m_intake.toggleReverse();
-      } else {
-        m_intake.setSpeed(0);
-      }
-    }
-  ));
+  // m_intake.SetDefaultCommand(RunCommand(
+  //   [this] {
+  //     if (m_operatorController.GetRawButton(Controller::B)) {
+  //       m_intake.toggle();
+  //     }
+  //     else if (m_operatorController.GetRawButton(Controller::X)) {
+  //       m_intake.toggleReverse();
+  //     } else {
+  //       m_intake.setSpeed(0);
+  //     }
+  //   }
+  // ));
 
    m_shooter.SetDefaultCommand(RunCommand(    
         [this] {
-            
-            
-            if (/*TASK: Write in condition for when you want the shooter to be running. Hint 1: Should be tied to when the right trigger is past a relative small value. Hint 2: Triggers are considered "axises" so when looking through the genericHID Class on wpilib c++ documentation, look for the functions that return an axis value. */true){
-                m_shooter.setSpeed(/*TASK: Using similar value to the if statement, use the value returned by the trigger being pushed down to set the speed, replace placeholder of 1*/ 1 * 600);
+            if (m_driverController.GetRawAxis(Controller::rightTrigger) > 0.001)  {
+                m_shooter.setSpeed(m_driverController.GetRawAxis(Controller::rightTrigger) * 100);
+            } else {
+                m_shooter.setSpeed(0);
             }
-            frc::SmartDashboard::PutNumber("leftShooterSpeed",m_superstructure.m_shooter.getleftSpeed());
+
+            if (m_driverController.GetRawButton(Controller::B)) {
+              m_shooter.setSpeed(100);
+            } else {
+              m_shooter.setSpeed(100);
+            }
+            // frc::SmartDashboard::PutNumber("leftShooterSpeed", m_shooter.getleftSpeed());
         },
         {&m_shooter}   
     ));

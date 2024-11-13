@@ -43,7 +43,7 @@ namespace OIConstants
 
     constexpr int kBreakBeamChannel = 0;
     constexpr int kIntakeMotor = 0;
-    constexpr int kShooterMotor = 1;
+    constexpr int kShooterMotor = 4;
 }
 
 namespace ShooterConstants{
@@ -59,9 +59,9 @@ namespace ShooterConstants{
     
     //idk abt these values so making new ones
     //TASK: Find Values for ksP, ksI, ksD
-    constexpr double ksP = 0.0; 
+    constexpr double ksP = 0.0005;
     constexpr double ksI = 0.0; 
-    constexpr double ksD = 0.0; 
+    constexpr double ksD = 0.0002;
     constexpr double ksFF = 0;
 
     constexpr units::revolutions_per_minute_t maxNeoRpm = 5700_rpm;

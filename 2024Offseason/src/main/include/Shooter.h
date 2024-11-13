@@ -59,6 +59,8 @@ private:
 
     //TASK: Define PID Controller for leftcontroller, name it m_leftcontroller so code doesnt break. Hint: it was on slides and if you're searching in docs, it has the word spark
 
+    SparkPIDController m_leftController = m_leftMotor.GetPIDController();
+
     SimpleMotorFeedforward<units::meters> m_leftFF;
     // SimpleMotorFeedforward<units::meters> m_rightFF;
 
