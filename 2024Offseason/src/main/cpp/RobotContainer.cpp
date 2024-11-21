@@ -4,24 +4,30 @@
 #include <frc2/command/button/JoystickButton.h>
 #include <frc2/command/button/POVButton.h>
 #include <frc2/command/button/Trigger.h>
-#include "RobotContainer.h"
-#include "Constants.h"
 #include <frc2/command/Commands.h>
 #include <frc2/command/InstantCommand.h>
+#include <frc2/command/RunCommand.h>
 
 #include <frc/smartdashboard/SmartDashboard.h>
 #include <frc/controller/PIDController.h>
 
-#include <frc2/command/RunCommand.h>
-
+#include "RobotContainer.h"
+#include "Constants.h"
 #include "TankDrive.h"
+
 using namespace std;
 using namespace frc2;
 using namespace OIConstants;
 
-RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shooter(OIConstants::kShooterMotor)
-{
+using namespace pathplanner;
+
+RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shooter(OIConstants::kShooterMotor) {
   ConfigureBindings();
+
+  m_chooser.SetDefaultOption(Autos::LINE_TEST, m_lineTest.get());
+  m_chooser.AddOption(Autos::LINE_TEST, m_lineTest.get());
+
+
   m_drive.SetDefaultCommand(RunCommand(
     [this]
     {
@@ -60,23 +66,25 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shoote
   //   }
   // ));
 
-   m_shooter.SetDefaultCommand(RunCommand(    
-        [this] {
-            if (m_driverController.GetRawAxis(Controller::rightTrigger) > 0.001)  {
-                m_shooter.setSpeed(m_driverController.GetRawAxis(Controller::rightTrigger) * 100);
-            } else {
-                m_shooter.setSpeed(0);
-            }
+  m_shooter.SetDefaultCommand(RunCommand(
+    [this] {
+      if (m_driverController.GetRawAxis(Controller::rightTrigger) > 0.001) {
+        m_shooter.setSpeed(m_driverController.GetRawAxis(Controller::rightTrigger) * 100);
+      }
+      else {
+        m_shooter.setSpeed(0);
+      }
 
-            if (m_driverController.GetRawButton(Controller::B)) {
-              m_shooter.setSpeed(100);
-            } else {
-              m_shooter.setSpeed(100);
-            }
-            // frc::SmartDashboard::PutNumber("leftShooterSpeed", m_shooter.getleftSpeed());
-        },
-        {&m_shooter}   
-    ));
+      if (m_driverController.GetRawButton(Controller::B)) {
+        m_shooter.setSpeed(100);
+      }
+      else {
+        m_shooter.setSpeed(100);
+      }
+      // frc::SmartDashboard::PutNumber("leftShooterSpeed", m_shooter.getleftSpeed());
+    },
+    { &m_shooter }
+  ));
 }
 
 void RobotContainer::ConfigureBindings()
@@ -86,7 +94,7 @@ void RobotContainer::ConfigureBindings()
   JoystickButton rightYAxis(&m_driverController, Controller::rightYAxis);
 }
 
-frc2::CommandPtr RobotContainer::GetAutonomousCommand()
+frc2::Command* RobotContainer::GetAutonomousCommand()
 {
-  return frc2::cmd::Print("No autonomous command configured");
+  return m_chooser.GetSelected();
 }

@@ -19,14 +19,15 @@
 #include <vector>
 #include <array>
 
-namespace OIConstants
-{
+namespace Autos {
+    const char* const LINE_TEST = "Line Test";
+}
 
+namespace OIConstants {
     constexpr int kDriverControllerPort = 0;
     constexpr int kOperatorControllerPort = 1;
 
-    namespace Controller
-    {
+    namespace Controller {
         constexpr int leftXAxis = 0;
         constexpr int leftYAxis = 1;
         constexpr int rightXAxis = 4;
@@ -46,21 +47,21 @@ namespace OIConstants
     constexpr int kShooterMotor = 4;
 }
 
-namespace ShooterConstants{
+namespace ShooterConstants {
     constexpr int leftMotor = 15;
     constexpr int rightMotor = 14;
-    constexpr double pulleyRatio = 30.0/18.0;
+    constexpr double pulleyRatio = 30.0 / 18.0;
     constexpr units::inch_t wheelDiameter = 4_in; // may change based on rpm
-    
+
     //velocity pid
     constexpr double ksS = 0.1;
     constexpr double ksV = 0.1;
     constexpr double ksA = 0.0;
-    
+
     //idk abt these values so making new ones
     //TASK: Find Values for ksP, ksI, ksD
     constexpr double ksP = 0.0005;
-    constexpr double ksI = 0.0; 
+    constexpr double ksI = 0.0;
     constexpr double ksD = 0.0002;
     constexpr double ksFF = 0;
 
@@ -68,17 +69,17 @@ namespace ShooterConstants{
     constexpr units::revolutions_per_minute_t maxWheelRpm = 9000_rpm;//replace this value with whatever max andymark says
     constexpr units::feet_per_second_t maxExitVelocity = 90_fps;
 
-    constexpr units::volt_t KlsS{0.16}; // friction term`
-    constexpr units::volt_t vKlsV{0.019}; // velocity term
-    constexpr units::meter_t aKlsV{1};
-    constexpr units::second_t sKlsV{1}; 
-    constexpr auto KlsV = vKlsV *sKlsV / aKlsV;
-    
+    constexpr units::volt_t KlsS{ 0.16 }; // friction term`
+    constexpr units::volt_t vKlsV{ 0.019 }; // velocity term
+    constexpr units::meter_t aKlsV{ 1 };
+    constexpr units::second_t sKlsV{ 1 };
+    constexpr auto KlsV = vKlsV * sKlsV / aKlsV;
 
-    constexpr units::volt_t KrsS{0.195}; // friction term
-    constexpr units::volt_t vKrsV{0.019}; // velocity term
-    constexpr units::meter_t aKrsV{1};
-    constexpr auto KrsV = vKrsV *sKlsV/ aKrsV;
+
+    constexpr units::volt_t KrsS{ 0.195 }; // friction term
+    constexpr units::volt_t vKrsV{ 0.019 }; // velocity term
+    constexpr units::meter_t aKrsV{ 1 };
+    constexpr auto KrsV = vKrsV * sKlsV / aKrsV;
 
 }
 namespace MathConstants {

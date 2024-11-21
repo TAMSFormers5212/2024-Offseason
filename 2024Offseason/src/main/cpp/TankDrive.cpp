@@ -11,21 +11,16 @@ TankDrive::TankDrive() : m_LeftSparkOne(3), m_LeftSparkTwo(2), m_RightSparkOne(1
     m_RightSparkTwo.Set(0);
     //Set up all SPARK motor controllers. 
     //Since they have already been instantiated in the .h file, simply set them all to 0.
-
 }
 void TankDrive::SetLeftSpeed(double speed) {
     m_LeftSparkOne.Set(speed);
     m_LeftSparkTwo.Set(speed);
-
     //Set the left SPARK controllers to the variable speed.
-
 }
 void TankDrive::SetRightSpeed(double speed) {
     m_RightSparkOne.Set(speed);
     m_RightSparkTwo.Set(speed);
     //Set the right SPARK controllers to the variable speed.
-
-
 }
 double TankDrive::GetRightSpeed() {
     return m_RightSparkOne.Get();
@@ -40,6 +35,21 @@ void TankDrive::StopDrive() {
     SetLeftSpeed(0);
     //Set all motor controllers to 0.
 }
-void TankDrive::Periodic() {
 
+static frc::Timer timer = {};
+static units::second_t timeDuration = 0_s;
+
+void TankDrive::forward(units::second_t seconds, double speed) {
+    timeDuration = seconds;
+    timer.Reset();
+    timer.Start();
+    SetLeftSpeed(speed);
+    SetRightSpeed(speed);
+}
+
+void TankDrive::Periodic() {
+    if (timer.Get() > timeDuration) {
+        SetLeftSpeed(0);
+        SetRightSpeed(0);
+    }
 }

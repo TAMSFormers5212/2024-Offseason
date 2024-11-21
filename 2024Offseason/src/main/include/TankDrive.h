@@ -21,12 +21,12 @@ class TankDrive : public frc2::SubsystemBase {
         void StopDrive();
         double GetRightSpeed();
         double GetLeftSpeed();
+
+        void forward(units::second_t seconds, double speed);
     private:
         Spark m_LeftSparkOne; 
         Spark m_LeftSparkTwo;
         Spark m_RightSparkOne; 
         Spark m_RightSparkTwo;
         //Instantiate four SPARK motor controllers and make two variables for left speed and right speed.
-
-
 };
