@@ -30,7 +30,7 @@ public:
 private:
   void ConfigureBindings();
 
-  frc2::CommandPtr m_lineTest = pathplanner::PathPlannerAuto(Autos::LINE_TEST).ToPtr();
+  frc2::CommandPtr m_lineTest = pathplanner::PathPlannerAuto(Autos::LINE).ToPtr();
 
   frc::SendableChooser<frc2::Command*> m_chooser;
 

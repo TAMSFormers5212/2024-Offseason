@@ -18,14 +18,13 @@
 using namespace std;
 using namespace frc2;
 using namespace OIConstants;
-
 using namespace pathplanner;
 
 RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shooter(OIConstants::kShooterMotor) {
   ConfigureBindings();
 
-  m_chooser.SetDefaultOption(Autos::LINE_TEST, m_lineTest.get());
-  m_chooser.AddOption(Autos::LINE_TEST, m_lineTest.get());
+  m_chooser.SetDefaultOption(Autos::LINE, m_lineTest.get());
+  m_chooser.AddOption(Autos::LINE, m_lineTest.get());
 
 
   m_drive.SetDefaultCommand(RunCommand(
@@ -50,8 +49,7 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shoote
       // challenge 3: Print the speeds to shuffleboard
       frc::SmartDashboard::PutNumber("Left Speed", m_drive.GetLeftSpeed());
       frc::SmartDashboard::PutNumber("Right Speed", m_drive.GetRightSpeed());
-    },
-    { &m_drive }));
+    }, { &m_drive }));
 
   // m_intake.SetDefaultCommand(RunCommand(
   //   [this] {

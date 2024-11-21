@@ -20,7 +20,7 @@
 #include <array>
 
 namespace Autos {
-    const char* const LINE_TEST = "Line Test";
+    const char* const LINE = "Line Auto";
 }
 
 namespace OIConstants {
