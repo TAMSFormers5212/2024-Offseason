@@ -11,11 +11,11 @@
 using namespace pathplanner;
 
 
-
 TankDrive::TankDrive() {
     m_LeftSparkOne.AddFollower(m_LeftSparkTwo);
     m_RightSparkOne.AddFollower(m_RightSparkTwo);
     m_LeftSparkOne.SetInverted(true);
+
 
     AutoBuilder::configureRamsete(
         [this]() { return getPose(); },
@@ -60,7 +60,7 @@ void TankDrive::StopDrive() {
 }
 
 constexpr units::meters_per_second_t MAX_VEL = units::meters_per_second_t(1.0);
-constexpr double M_PWM_PER_SEC = 0.001;
+constexpr double M_PWM_PER_SEC = 1.0;
 
 frc::Timer dtimer;
 
@@ -69,10 +69,15 @@ void TankDrive::driveRobotRelative(const frc::ChassisSpeeds& speeds) {
     m_drive.TankDrive(wheelSpeeds.left / MAX_VEL, wheelSpeeds.right / MAX_VEL);
 }
 
+units::meter_t leftMeters = 0_m;
+units::meter_t rightMeters = 0_m;
+
 void TankDrive::Periodic() {
+    leftMeters += units::meter_t(GetLeftSpeed() * M_PWM_PER_SEC * dtimer.Get().value());
+    rightMeters += units::meter_t(GetRightSpeed() * M_PWM_PER_SEC * dtimer.Get().value());
     m_driveOdometry.Update(0_deg,
-        units::meter_t(GetLeftSpeed() * M_PWM_PER_SEC * dtimer.Get()),
-        units::meter_t(GetRightSpeed() * M_PWM_PER_SEC * dtimer.Get())
+        leftMeters,
+        rightMeters
     );
     dtimer.Reset();
     dtimer.Start();

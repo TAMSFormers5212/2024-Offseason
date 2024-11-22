@@ -23,8 +23,8 @@ using namespace pathplanner;
 RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shooter(OIConstants::kShooterMotor) {
   ConfigureBindings();
 
-  m_chooser.SetDefaultOption(Autos::LINE, m_lineTest.get());
-  m_chooser.AddOption(Autos::LINE, m_lineTest.get());
+  // m_chooser.SetDefaultOption(Autos::LINE, m_lineTest.get());
+  // m_chooser.AddOption(Autos::LINE, m_lineTest.get());
 
 
   m_drive.SetDefaultCommand(RunCommand(
@@ -44,20 +44,20 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shoote
 
   m_shooter.SetDefaultCommand(RunCommand(
     [this] {
-      if (m_driverController.GetRawAxis(Controller::rightTrigger) > 0.001) {
-        m_shooter.setSpeed(m_driverController.GetRawAxis(Controller::rightTrigger) * 100);
-      }
-      else {
-        m_shooter.setSpeed(0);
-      }
+      // if (m_driverController.GetRawAxis(Controller::rightTrigger) > 0.001) {
+      //   m_shooter.setSpeed(m_driverController.GetRawAxis(Controller::rightTrigger) * 100);
+      // }
+      // else {
+      //   m_shooter.setSpeed(0);
+      // }
 
-      if (m_driverController.GetRawButton(Controller::B)) {
-        m_shooter.setSpeed(100);
-      }
-      else {
-        m_shooter.setSpeed(100);
-      }
-      // frc::SmartDashboard::PutNumber("leftShooterSpeed", m_shooter.getleftSpeed());
+      // if (m_driverController.GetRawButton(Controller::B)) {
+      //   m_shooter.setSpeed(100);
+      // }
+      // else {
+      //   m_shooter.setSpeed(100);
+      // }
+      frc::SmartDashboard::PutNumber("leftShooterSpeed", m_shooter.getleftSpeed());
     },
     { &m_shooter }
   ));
@@ -72,5 +72,5 @@ void RobotContainer::ConfigureBindings()
 
 frc2::Command* RobotContainer::GetAutonomousCommand()
 {
-  return m_chooser.GetSelected();
+  return m_lineTest.get();
 }

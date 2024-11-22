@@ -27,16 +27,15 @@ public:
 
   frc2::Command* GetAutonomousCommand();
 
-private:
-  void ConfigureBindings();
-
-  frc2::CommandPtr m_lineTest = pathplanner::PathPlannerAuto(Autos::LINE).ToPtr();
-
-  frc::SendableChooser<frc2::Command*> m_chooser;
-
   TankDrive m_drive;
   Intake m_intake;
   Shooter m_shooter;
+
+private:
+  void ConfigureBindings();
+
+  frc2::CommandPtr m_lineTest = pathplanner::PathPlannerAuto("Test Auto").ToPtr();
+  frc::SendableChooser<frc2::Command*> m_chooser;
 
   frc::GenericHID m_driverController{ kDriverControllerPort };
   frc::GenericHID m_operatorController{ kOperatorControllerPort };

@@ -20,6 +20,9 @@
 
 #include <pathplanner/lib/auto/AutoBuilder.h>
 #include <pathplanner/lib/controllers/PPRamseteController.h>
+#include <pathplanner/lib/commands/PathPlannerAuto.h>
+
+#include "Constants.h"
 
 using namespace rev;
 using namespace frc;
@@ -49,6 +52,8 @@ public:
     double GetLeftSpeed();
     double GetRightSpeed();
     void StopDrive();
+
+    // frc2::CommandPtr m_lineTest = pathplanner::PathPlannerAuto("Line Auto").ToPtr();
 
     frc::DifferentialDrive m_drive{
         [&](double output) { SetLeftSpeed(output); },
