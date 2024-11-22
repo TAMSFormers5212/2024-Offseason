@@ -28,41 +28,19 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shoote
 
 
   m_drive.SetDefaultCommand(RunCommand(
-    [this]
-    {
-      double leftSpeed = m_driverController.GetRawAxis(Controller::leftYAxis);
-      double rightSpeed = m_driverController.GetRawAxis(Controller::rightYAxis);
+    [this] {
+      double leftY = m_driverController.GetRawAxis(Controller::leftYAxis);
+      double leftX = m_driverController.GetRawAxis(Controller::leftXAxis);
       if (m_driverController.GetRawButtonPressed(Controller::A))
       {
-        leftSpeed = 0;
-        rightSpeed = 0;
+        leftY = 0;
+        leftX = 0;
       }
 
-      m_drive.SetLeftSpeed(leftSpeed);
-      m_drive.SetRightSpeed(rightSpeed);
-
-      // Use driverController.GetRawAxis to get inputs and make the motors move based off of those inputs
-      // Left joystick should control left motors, right joystick should control right motors
-
-      // Challenge 2: Make it so that when button A is pressed, the robot stops moving.
-
-      // challenge 3: Print the speeds to shuffleboard
-      frc::SmartDashboard::PutNumber("Left Speed", m_drive.GetLeftSpeed());
-      frc::SmartDashboard::PutNumber("Right Speed", m_drive.GetRightSpeed());
-    }, { &m_drive }));
-
-  // m_intake.SetDefaultCommand(RunCommand(
-  //   [this] {
-  //     if (m_operatorController.GetRawButton(Controller::B)) {
-  //       m_intake.toggle();
-  //     }
-  //     else if (m_operatorController.GetRawButton(Controller::X)) {
-  //       m_intake.toggleReverse();
-  //     } else {
-  //       m_intake.setSpeed(0);
-  //     }
-  //   }
-  // ));
+      m_drive.m_drive.ArcadeDrive(leftY, leftX);
+    },
+    { &m_drive }
+  ));
 
   m_shooter.SetDefaultCommand(RunCommand(
     [this] {
