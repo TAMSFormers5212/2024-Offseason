@@ -33,10 +33,13 @@ public:
     TankDrive();
 
     inline const frc::Pose2d& getPose() const {
+        // return Pose2d(leftMeters, 0_m, 0_deg);
         return m_driveOdometry.GetPose();
     }
 
     inline void resetPose(const frc::Pose2d& pose) {
+        leftMeters = 0_m;
+        rightMeters = 0_m;
         m_driveOdometry.ResetPosition(0_deg, 0_m, 0_m, pose);
     }
 
@@ -53,13 +56,14 @@ public:
     double GetRightSpeed();
     void StopDrive();
 
-    // frc2::CommandPtr m_lineTest = pathplanner::PathPlannerAuto("Line Auto").ToPtr();
-
     frc::DifferentialDrive m_drive{
         [&](double output) { SetLeftSpeed(output); },
         [&](double output) { SetRightSpeed(output); }
     };
 private:
+    units::meter_t leftMeters = 0_m;
+    units::meter_t rightMeters = 0_m;
+
     Spark m_LeftSparkOne{ 3 };
     Spark m_LeftSparkTwo{ 2 };
     Spark m_RightSparkOne{ 1 };

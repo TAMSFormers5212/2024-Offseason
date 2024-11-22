@@ -34,7 +34,7 @@ public:
 private:
   void ConfigureBindings();
 
-  frc2::CommandPtr m_lineTest = pathplanner::PathPlannerAuto("Test Auto").ToPtr();
+  frc2::CommandPtr m_lineTest = pathplanner::PathPlannerAuto("Test Auto1").ToPtr();
   frc::SendableChooser<frc2::Command*> m_chooser;
 
   frc::GenericHID m_driverController{ kDriverControllerPort };

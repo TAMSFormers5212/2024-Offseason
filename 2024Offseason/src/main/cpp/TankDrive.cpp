@@ -60,7 +60,7 @@ void TankDrive::StopDrive() {
 }
 
 constexpr units::meters_per_second_t MAX_VEL = units::meters_per_second_t(1.0);
-constexpr double M_PWM_PER_SEC = 1.0;
+constexpr double M_PWM_PER_SEC = 1.5;
 
 frc::Timer dtimer;
 
@@ -68,9 +68,6 @@ void TankDrive::driveRobotRelative(const frc::ChassisSpeeds& speeds) {
     DifferentialDriveWheelSpeeds wheelSpeeds = m_driveKinematics.ToWheelSpeeds(speeds);
     m_drive.TankDrive(wheelSpeeds.left / MAX_VEL, wheelSpeeds.right / MAX_VEL);
 }
-
-units::meter_t leftMeters = 0_m;
-units::meter_t rightMeters = 0_m;
 
 void TankDrive::Periodic() {
     leftMeters += units::meter_t(GetLeftSpeed() * M_PWM_PER_SEC * dtimer.Get().value());

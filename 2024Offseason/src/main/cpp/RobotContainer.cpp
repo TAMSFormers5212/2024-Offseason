@@ -26,10 +26,9 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shoote
   // m_chooser.SetDefaultOption(Autos::LINE, m_lineTest.get());
   // m_chooser.AddOption(Autos::LINE, m_lineTest.get());
 
-
   m_drive.SetDefaultCommand(RunCommand(
     [this] {
-      double leftY = m_driverController.GetRawAxis(Controller::leftYAxis);
+      double leftY = -m_driverController.GetRawAxis(Controller::leftYAxis);
       double leftX = m_driverController.GetRawAxis(Controller::leftXAxis);
       if (m_driverController.GetRawButtonPressed(Controller::A))
       {
@@ -63,14 +62,12 @@ RobotContainer::RobotContainer() : m_intake(OIConstants::kIntakeMotor), m_shoote
   ));
 }
 
-void RobotContainer::ConfigureBindings()
-{
+void RobotContainer::ConfigureBindings() {
 
   JoystickButton leftYAxis(&m_driverController, Controller::leftYAxis);
   JoystickButton rightYAxis(&m_driverController, Controller::rightYAxis);
 }
 
-frc2::Command* RobotContainer::GetAutonomousCommand()
-{
+frc2::Command* RobotContainer::GetAutonomousCommand() {
   return m_lineTest.get();
 }
